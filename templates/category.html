@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+   
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Bootstrap  3.3.7 -->
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+   {% if category_id != '' %}
+      <form action="/update_form" method="POST">
+    {% else %}
+      <form action="/addCategory" method="POST">
+    {% endif %}
+    
+      <div class="jumbotron text-center text-info">
+        <h4>Category</h4>
+      </div>
+      <div class="col-md-12">
+        <div class="panel panel-default col-md-4 col-md-offset-4" style="padding: 6px 6px 6px 6px;">
+          <div class="form-group">
+            <label >Category</label>
+              <input type="hidden" class="form-control" name="cat_id" id="cat_id" value="{{category_id}}" placeholder="Category">
+              <input type="text" required class="form-control" name="category" id="category" value="{{cat_name}}" placeholder="Category">
+          </div>  
+          <div class="form-group">
+              {% if category_id != '' %}
+                <button type="submit" class="btn btn-primary pull-right">Edit</button>
+              {% else %}
+                <button type="submit" class="btn btn-primary pull-right">Save</button>
+              {% endif %}
+            
+          </div>
+        </div>
+      </div>
+    </form>
+      <div class="col-md-12">
+        <div class="col-md-6 col-md-offset-3">
+          <!-- prodect starting here  -->
+          <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th>Sl NO.</th>
+                <th>Category</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in category_data  or edit_category_data %}
+
+              <tr>
+                <td>{{ item[0] }}</td>
+                <td>{{ item[1] }}</td>
+                <td>
+                  <a href="/edit_category/{{ item[0] }}/{{item[1]}}">
+                    <button type="button" class="btn btn-success">Edit</button>
+                  </a>
+                  <a href="/delete_category/{{ item[0] }}">
+                    <button type="button" class="btn btn-danger">Delete</button>
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <!-- prodect  end here  -->
+        </div>
+      </div>
+  </body>
+</html>
